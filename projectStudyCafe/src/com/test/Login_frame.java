@@ -17,17 +17,23 @@ import java.awt.event.ActionEvent;
 import javax.swing.Action;
 import java.awt.Button;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.JToggleButton;
+import javax.swing.JPasswordField;
 
-public class Frame_login {
+public class Login_frame {
 
 	private JFrame frame;
 	private JTextField id_textField;
-	private JTextField pw_textField;
-	ArrayList<upload> listPerson_instance = new ArrayList<upload>();
-	ArrayList<ArrayList<String>> listPerson_list = new ArrayList<ArrayList<String>>();
+	private JPasswordField passwordField;
+
+	ArrayList<ArrayList<String>> userInfo_list = new ArrayList<ArrayList<String>>();
 
 	/**
 	 * Launch the application.
@@ -36,7 +42,7 @@ public class Frame_login {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Frame_login window = new Frame_login();
+					Login_frame window = new Login_frame();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -48,9 +54,9 @@ public class Frame_login {
 	/**
 	 * Create the application.
 	 */
-	public Frame_login() {
+	public Login_frame() {
 		initialize(); // frame이 열리게 함
-		Db.bringDb_bylist(listPerson_list); // frame이 열린뒤, listPerson에 txt파일의 회원정보를 저장하게 함.
+		
 
 	}
 
@@ -58,6 +64,7 @@ public class Frame_login {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		Db.ReadInfo(userInfo_list);
 		frame = new JFrame();
 		frame.setBounds(400, 100, 500, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -84,41 +91,60 @@ public class Frame_login {
 		frame.getContentPane().add(id_textField);
 		id_textField.setColumns(10);
 
-		pw_textField = new JTextField();
-		pw_textField.setColumns(10);
-		pw_textField.setBounds(221, 224, 106, 21);
-		frame.getContentPane().add(pw_textField);
+		passwordField = new JPasswordField();
+		passwordField.setBounds(218, 223, 107, 23);
+		frame.getContentPane().add(passwordField);
 
 		JButton btn_login = new JButton("login");
 		btn_login.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String input_id = id_textField.getText();
-				String input_pw = pw_textField.getText();
+				String ID = id_textField.getText();
+				String PW = passwordField.getText();
 
 				// 세 가지 조건 모두를 만족해야 로그인 가능
-				if ((listPerson_list.get(0).contains(input_id)) && (listPerson_list.get(1).contains(input_pw))
-						&& listPerson_list.get(0).indexOf(input_id) == listPerson_list.get(1).indexOf(input_pw)) {
-					JOptionPane.showMessageDialog(null, "로그인 성공", "login", JOptionPane.DEFAULT_OPTION);
+				if ((userInfo_list.get(0).contains(ID)) && (userInfo_list.get(1).contains(PW))
+						&& (userInfo_list.get(0).indexOf(ID) == userInfo_list.get(1).indexOf(PW))) {
+					
+					// user 정보를 map 에 담아두기
+					int userIndex =  userInfo_list.get(0).indexOf(ID);
+					HashMap<String, String> userInfo = new HashMap<String, String>();
+					
+					userInfo.put("ID", ID);
+					userInfo.put("PW", PW);
+					userInfo.put("Index", userIndex+"");
+					
+					List<String> list_path = Arrays.asList("Cart", "paymentHistory", "Point", "freeADayPassTime",
+							"freeDaysPassTime", "freeWeekPassLastDay", "groupADayPassTime", "freeWeekPassPeriod");
+
+					for (int i = 0; i < list_path.size(); i++) {
+						userInfo.put(list_path.get(i), userInfo_list.get(i+2).get(userIndex));
+						
+					}
+					
+					// map 다음 프레임에 넘겨주기
+					LoginSuccess_frame loginsuccess = new LoginSuccess_frame(userInfo);
+					loginsuccess.main(new String[] {});
+					frame.dispose();
 
 				} else {
-					JOptionPane.showMessageDialog(null, "로그인 실패", "login", JOptionPane.DEFAULT_OPTION);
+					JOptionPane.showMessageDialog(null, "ID와 PW를 확인해주세요", "login", JOptionPane.DEFAULT_OPTION);
 
-					
 				}
 
 			}
 		});
 		btn_login.setBounds(332, 310, 95, 23);
 		frame.getContentPane().add(btn_login);
-		
+
 		JButton btn_signup = new JButton("sign_up");
 		btn_signup.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Frame_signup signup = new Frame_signup();
-				signup.main(null);
+				SignUp_frame signup = new SignUp_frame();
+				signup.main(new String[] {});
 			}
 		});
 		btn_signup.setBounds(205, 391, 95, 23);
 		frame.getContentPane().add(btn_signup);
+
 	}
 }

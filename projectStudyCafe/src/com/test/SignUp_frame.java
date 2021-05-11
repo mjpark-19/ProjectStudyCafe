@@ -19,7 +19,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextPane;
 import java.awt.Color;
 
-public class Frame_signup {
+public class SignUp_frame {
 
 	private JFrame frame;
 	private JTextField textField_id;
@@ -34,7 +34,7 @@ public class Frame_signup {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Frame_signup window = new Frame_signup();
+					SignUp_frame window = new SignUp_frame();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -46,7 +46,7 @@ public class Frame_signup {
 	/**
 	 * Create the application.
 	 */
-	public Frame_signup() {
+	public SignUp_frame() {
 		initialize();
 	}
 
@@ -103,33 +103,37 @@ public class Frame_signup {
 		JButton btn_submit = new JButton("submit");
 		btn_submit.setBounds(296, 209, 81, 26);
 		frame.getContentPane().add(btn_submit);
-
+		Db.ReadInfo(listPerson_list);
+		
 		JButton btn_checkid = new JButton("\uC911\uBCF5\uD655\uC778");
 		btn_checkid.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String input_id = textField_id.getText();
+				String ID = textField_id.getText();
 				String pattern = "^\\d{8}$"; // 정규표현식 사용
-				Boolean regex = Pattern.matches(pattern, input_id);
-
+				Boolean regex = Pattern.matches(pattern, ID);
 				
-				// 중복확인
-				// 중복되지 않을 때만 아래의 pw를 입력하는 로직을 구현할 수 있나?
-				Db.bringDb_bylist(listPerson_list);
-
+				// 중복확인버튼 클릭 
+	
 				if (!regex) {
 					lblNewLabel_id.setText("id는 핸드폰번호 뒷 8자리로 설정해주세요");
 					textField_id.setText("");
 				} else {
-					if (listPerson_list.get(0).contains(input_id)) {
-						JOptionPane.showMessageDialog(null, "id가 이미 존재합니다", "signup", JOptionPane.DEFAULT_OPTION);
-						textField_id.setText("");
-						lblNewLabel_id.setText("");
-					} else {
-						JOptionPane.showMessageDialog(null, "사용가능한 id입니다", "signup", JOptionPane.DEFAULT_OPTION);
-						lblNewLabel_id.setText("id형식이 올바릅니다");
-					}
+					try {
+						if (listPerson_list.get(0).contains(ID)) {
+							JOptionPane.showMessageDialog(null, "id가 이미 존재합니다", "signup", JOptionPane.DEFAULT_OPTION);
+							textField_id.setText("");
+							lblNewLabel_id.setText("");
+						} else {
+							JOptionPane.showMessageDialog(null, "사용가능한 id입니다", "signup", JOptionPane.DEFAULT_OPTION);
+							lblNewLabel_id.setText("id형식이 올바릅니다");
+						}
 
-				}
+					} catch (Exception e2) {
+						// TODO: handle exception
+					}
+					JOptionPane.showMessageDialog(null, "사용가능한 id입니다", "signup", JOptionPane.DEFAULT_OPTION);
+					lblNewLabel_id.setText("id형식이 올바릅니다");
+				}	
 
 			}
 		});
@@ -141,38 +145,30 @@ public class Frame_signup {
 		lblNewLabel_pw.setFont(new Font("a고딕17", Font.PLAIN, 9));
 		lblNewLabel_pw.setBounds(178, 188, 226, 15);
 		frame.getContentPane().add(lblNewLabel_pw);
+
 		btn_submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				String input_id = textField_id.getText();
-				String input_pw = passwordField.getText();
-				String input_pw_2 = passwordField_2.getText();
+				String ID = textField_id.getText();
+				String PW = passwordField.getText();
+				String PW2 = passwordField_2.getText();
+				String lblText_id = lblNewLabel_id.getText();
 
-				// id를 빈칸으로 제출했는지 체크 + 중복확인 했나
-
-				// id가 형식에 맞지 않으면 아래 label 에 경고문
-//				String pattern = "^\\d{8}$"; // 정규표현식 사용
-//				Boolean regex = Pattern.matches(pattern, input_id);
-//
-//				if (!regex) {
-//					lblNewLabel_id.setText("id는 핸드폰번호 뒷 8자리로 설정해주세요");
-//				} else {
-//					lblNewLabel_id.setText("id형식이 올바릅니다");
-//				}
-
-				// 비밀번호가 동일한지 체크
-				if (input_pw.equals(input_pw_2)) {
-					lblNewLabel_pw.setText("");
-
+				if (lblText_id != "id형식이 올바릅니다") {
+					JOptionPane.showMessageDialog(frame, "id 중복확인 해주세요", "signup", JOptionPane.DEFAULT_OPTION);
 				} else {
-					lblNewLabel_pw.setText("비밀번호가 일치하지 않습니다");
-				}
+					// 비밀번호가 동일한지 체크
+					if (PW.equals(PW2)) {
+						lblNewLabel_pw.setText("");
+						if ((lblText_id.equals("id형식이 올바릅니다")) && lblNewLabel_pw.getText().equals("")) {
+							Db.createInfo(ID, PW2);
+							JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다", "signup", JOptionPane.DEFAULT_OPTION);
+							frame.dispose();
+						}
 
-				// Db에 넣기 (text파일)
-
-				if ((lblNewLabel_id.getText().equals("id형식이 올바릅니다")) && lblNewLabel_pw.getText().equals("")) {
-					Db.putinDb(input_id, input_pw_2);
-					JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다", "signup", JOptionPane.DEFAULT_OPTION);
+					} else {
+						lblNewLabel_pw.setText("비밀번호가 일치하지 않습니다");
+					}
 
 				}
 
