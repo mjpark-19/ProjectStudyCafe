@@ -31,11 +31,10 @@ import javax.swing.JPasswordField;
 import java.awt.Color;
 import java.awt.Cursor;
 
-public class Login_frame {
+public class Login_frame extends Db {
 
 	private JFrame frame;
 
-	ArrayList<ArrayList<String>> userInfo_list = new ArrayList<ArrayList<String>>();
 	private JTextField textField_id;
 	private JTextField textField_pw;
 
@@ -43,6 +42,7 @@ public class Login_frame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -67,30 +67,35 @@ public class Login_frame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		Db.ReadInfo(userInfo_list);
+
 		frame = new JFrame();
-		frame.setBounds(0, 0, 1475, 830);
+		frame.setBounds(0, 0, 1400, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.DARK_GRAY);
-		panel.setBounds(0, 0, 1475, 830);
+		panel.setBounds(0, 0, 1400, 800);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		panel.setFocusable(true);
 
 		JLabel lblNewLabel_1 = new JLabel("phone number");
 		lblNewLabel_1.setFont(new Font("굴림", Font.PLAIN, 15));
-		lblNewLabel_1.setBounds(195, 175, 107, 42);
+		lblNewLabel_1.setBounds(29, 212, 107, 42);
 		panel.add(lblNewLabel_1);
 
 		JLabel lblNewLabel_1_1 = new JLabel("password");
 		lblNewLabel_1_1.setFont(new Font("굴림", Font.PLAIN, 15));
-		lblNewLabel_1_1.setBounds(195, 254, 107, 42);
+		lblNewLabel_1_1.setBounds(29, 291, 107, 42);
 		panel.add(lblNewLabel_1_1);
 
 		JButton btn_login = new JButton("login");
+		btn_login.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				login();
+			}
+		});
 		btn_login.setBounds(1017, 190, 175, 100);
 		panel.add(btn_login);
 
@@ -98,19 +103,19 @@ public class Login_frame {
 		textField_id.setForeground(Color.GRAY);
 		textField_id.setText("\uC544\uC774\uB514\uB97C \uC785\uB825\uD558\uC138\uC694");
 		textField_id.setColumns(10);
-		textField_id.setBounds(314, 187, 665, 30);
+		textField_id.setBounds(148, 224, 665, 30);
 		panel.add(textField_id);
 
 		textField_pw = new JTextField();
 		textField_pw.setForeground(Color.GRAY);
 		textField_pw.setText("\uBE44\uBC00\uBC88\uD638\uB97C \uC785\uB825\uD558\uC138\uC694");
 		textField_pw.setColumns(10);
-		textField_pw.setBounds(314, 262, 665, 30);
+		textField_pw.setBounds(148, 299, 665, 30);
 		panel.add(textField_pw);
 
 		JPanel panel_keypad = new JPanel();
 		panel_keypad.setBackground(Color.BLACK);
-		panel_keypad.setBounds(0, 390, 1282, 310);
+		panel_keypad.setBounds(348, 379, 867, 293);
 		panel.add(panel_keypad);
 		panel_keypad.setLayout(null);
 		panel_keypad.setVisible(false);
@@ -127,7 +132,7 @@ public class Login_frame {
 				btn_num.setFont(new Font("굴림", Font.BOLD, 20));
 				btn_num.setBackground(Color.BLACK);
 				btn_num.setForeground(new Color(255, 200, 0));
-				btn_num.setBounds(200 + i * 200, 30 + j * 60, 173, 39);
+				btn_num.setBounds(100 + i * 200, 30 + j * 60, 173, 39);
 				btn_num.addActionListener(new ActionListener() {
 
 					@Override
@@ -148,7 +153,7 @@ public class Login_frame {
 		btn_0.setForeground(Color.ORANGE);
 		btn_0.setFont(new Font("굴림", Font.BOLD, 20));
 		btn_0.setBackground(Color.BLACK);
-		btn_0.setBounds(200 + 1 * 200, 30 + 3 * 60, 173, 39);
+		btn_0.setBounds(298, 210, 173, 39);
 		btn_0.addActionListener(new ActionListener() {
 
 			@Override
@@ -167,7 +172,7 @@ public class Login_frame {
 		btn_010.setForeground(Color.ORANGE);
 		btn_010.setFont(new Font("굴림", Font.BOLD, 20));
 		btn_010.setBackground(Color.BLACK);
-		btn_010.setBounds(200 + 0 * 200, 30 + 3 * 60, 173, 39);
+		btn_010.setBounds(98, 210, 173, 39);
 		btn_010.addActionListener(new ActionListener() {
 
 			@Override
@@ -186,7 +191,7 @@ public class Login_frame {
 		btn_00.setForeground(Color.ORANGE);
 		btn_00.setFont(new Font("굴림", Font.BOLD, 20));
 		btn_00.setBackground(Color.BLACK);
-		btn_00.setBounds(200 + 2 * 200, 30 + 3 * 60, 173, 39);
+		btn_00.setBounds(498, 210, 173, 39);
 		btn_00.addActionListener(new ActionListener() {
 
 			@Override
@@ -205,7 +210,7 @@ public class Login_frame {
 		btn_back.setForeground(Color.ORANGE);
 		btn_back.setFont(new Font("굴림", Font.BOLD, 20));
 		btn_back.setBackground(Color.BLACK);
-		btn_back.setBounds(200 + 3 * 200, 30 + 0 * 60, 173, 39);
+		btn_back.setBounds(682, 30, 173, 39);
 		btn_back.addActionListener(new ActionListener() {
 
 			@Override
@@ -228,7 +233,7 @@ public class Login_frame {
 		btn_reset.setForeground(Color.ORANGE);
 		btn_reset.setFont(new Font("굴림", Font.BOLD, 20));
 		btn_reset.setBackground(Color.BLACK);
-		btn_reset.setBounds(200 + 3 * 200, 30 + 1 * 60, 173, 39);
+		btn_reset.setBounds(682, 90, 173, 39);
 		btn_reset.addActionListener(new ActionListener() {
 
 			@Override
@@ -247,7 +252,7 @@ public class Login_frame {
 		btn_close.setForeground(Color.ORANGE);
 		btn_close.setFont(new Font("굴림", Font.BOLD, 20));
 		btn_close.setBackground(Color.BLACK);
-		btn_close.setBounds(200 + 3 * 200, 30 + 2 * 60, 173, 39);
+		btn_close.setBounds(682, 150, 173, 39);
 		btn_close.addActionListener(new ActionListener() {
 
 			@Override
@@ -270,11 +275,7 @@ public class Login_frame {
 
 			@Override
 			public void focusGained(FocusEvent e) {
-				if (textField_id.isFocusOwner() == true) {
-					panel_keypad.setVisible(true);
-				}
-					
-				
+				panel_keypad.setVisible(true);
 
 			}
 		});
@@ -294,5 +295,23 @@ public class Login_frame {
 			}
 		});
 
+	}
+	
+	public void login() {
+		String ID = textField_id.getText();
+		String PW = textField_pw.getText();
+
+		// 세 가지 조건 모두를 만족해야 로그인 가능
+		if ((list_ID.contains(ID)) && (list_PW.contains(PW)) && (list_ID.indexOf(ID) == list_PW.indexOf(PW))) {
+
+			// 로그인 성공 시, Userinfo 가져와 출력해보기
+
+			UserInfo userinfo = mapLoad.get(ID); // 로그인한 아이디에 해당하는 value(=Userinfo 객체) 를 저장
+			System.out.println(userinfo);
+			frame.dispose();
+
+		} else {
+			JOptionPane.showMessageDialog(null, "ID와 PW를 확인해주세요", "login", JOptionPane.DEFAULT_OPTION);
+		}
 	}
 }

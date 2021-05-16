@@ -6,35 +6,80 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
 public class Db {
-	static String path_ID = "A:\\kiosk\\projectStudyCafe\\User_info\\ID.txt";
-	static String path_PW = "A:\\kiosk\\projectStudyCafe\\User_info\\PW.txt";
-	static String path_Cart = "A:\\kiosk\\projectStudyCafe\\User_info\\Cart.txt";
-	static String path_paymentHistory = "A:\\kiosk\\projectStudyCafe\\User_info\\paymentHistory.txt";
-	static String path_Point = "A:\\kiosk\\projectStudyCafe\\User_info\\Point.txt";
-	static String path_freeADayPassTime = "A:\\kiosk\\projectStudyCafe\\User_info\\freeADayPassTime.txt";
-	static String path_freeDaysPassTime = "A:\\kiosk\\projectStudyCafe\\User_info\\freeDaysPassTime.txt";
-	static String path_freeWeekPassLastDay = "A:\\kiosk\\projectStudyCafe\\User_info\\freeWeekPassLastDay.txt";
-	static String path_groupADayPassTime = "A:\\kiosk\\projectStudyCafe\\User_info\\groupADayPassTime.txt";
-	static String path_freeWeekPassPeriod = "A:\\kiosk\\projectStudyCafe\\User_info\\freeWeekPassPeriod.txt";
+	// txt파일 경로
+	String path_ID = "A:\\kiosk\\projectStudyCafe\\User_info\\ID.txt";
+	String path_PW = "A:\\kiosk\\projectStudyCafe\\User_info\\PW.txt";
+	String path_Cart = "A:\\kiosk\\projectStudyCafe\\User_info\\Cart.txt";
+	String path_paymentHistory = "A:\\kiosk\\projectStudyCafe\\User_info\\paymentHistory.txt";
+	String path_Point = "A:\\kiosk\\projectStudyCafe\\User_info\\Point.txt";
+	String path_freeADayPassTime = "A:\\kiosk\\projectStudyCafe\\User_info\\freeADayPassTime.txt";
+	String path_freeDaysPassTime = "A:\\kiosk\\projectStudyCafe\\User_info\\freeDaysPassTime.txt";
+	String path_freeWeekPassLastDay = "A:\\kiosk\\projectStudyCafe\\User_info\\freeWeekPassLastDay.txt";
+	String path_groupADayPassTime = "A:\\kiosk\\projectStudyCafe\\User_info\\groupADayPassTime.txt";
+	String path_freeWeekPassPeriod = "A:\\kiosk\\projectStudyCafe\\User_info\\freeWeekPassPeriod.txt";
+	
+	// 각 정보를 리스트에 저장
+	ArrayList<String> list_ID = new ArrayList<String>();
+	ArrayList<String> list_PW = new ArrayList<String>();
+	ArrayList<String> list_Cart = new ArrayList<String>();
+	ArrayList<String> list_paymentHistory = new ArrayList<String>();
+	ArrayList<String> list_Point = new ArrayList<String>();
+	ArrayList<String> list_freeADayPassTime = new ArrayList<String>();
+	ArrayList<String> list_freeDaysPassTime = new ArrayList<String>();
+	ArrayList<String> list_freeWeekPassLastDay = new ArrayList<String>();
+	ArrayList<String> list_groupADayPassTime = new ArrayList<String>();
+	ArrayList<String> list_freeWeekPassPeriod = new ArrayList<String>();
+	
+	// 각 정보를 map<ID, Userinfo> 에 저장. Userinfo엔 pw, cart, poin등의 정보가 모두 담긴다. 
+	HashMap<String, UserInfo> mapLoad = new HashMap<>();
 
-	static ArrayList<String> list_ID = new ArrayList<String>();
-	static ArrayList<String> list_PW = new ArrayList<String>();
-	static ArrayList<String> list_Cart = new ArrayList<String>();
-	static ArrayList<String> list_paymentHistory = new ArrayList<String>();
-	static ArrayList<String> list_Point = new ArrayList<String>();
-	static ArrayList<String> list_freeADayPassTime = new ArrayList<String>();
-	static ArrayList<String> list_freeDaysPassTime = new ArrayList<String>();
-	static ArrayList<String> list_freeWeekPassLastDay = new ArrayList<String>();
-	static ArrayList<String> list_groupADayPassTime = new ArrayList<String>();
-	static ArrayList<String> list_freeWeekPassPeriod = new ArrayList<String>();
+	// Db 생성자
 
-	// data를 리스트 안에 리스트 형태로 저장하는 경우
-	public static void ReadInfo(ArrayList<ArrayList<String>> listperson) {
+	public Db() {
+		readUserInfo();
 
+	}
+
+	// 회원가입 시 txt파일에 정보 삽입
+	public void createDbInfo(String id, String pw) {
+		try {
+			BufferedWriter bw_ID = new BufferedWriter(new FileWriter(path_ID, true));
+			BufferedWriter bw_PW = new BufferedWriter(new FileWriter(path_PW, true));
+
+			bw_ID.write(id + "\n");
+			bw_PW.write(pw + "\n");
+
+			bw_ID.close();
+			bw_PW.close();
+
+			// 그 외 정보들 빈칸으로 넣어주기
+			List<String> list_path = Arrays.asList(path_Cart, path_paymentHistory, path_Point, path_freeADayPassTime,
+					path_freeDaysPassTime, path_freeWeekPassLastDay, path_groupADayPassTime, path_freeWeekPassPeriod);
+
+			for (int i = 0; i < list_path.size(); i++) {
+
+				BufferedWriter bw = new BufferedWriter(new FileWriter(list_path.get(i), true));
+				bw.write("" + "\n");
+				bw.close();
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+	}
+
+
+	// txt파일의 정보들을 모두 가져와, Db 클래스 내의 list와 map에 저장해준다.
+	public void readUserInfo() {
 		try {
 			BufferedReader br_ID = new BufferedReader(new FileReader(path_ID));
 			BufferedReader br_PW = new BufferedReader(new FileReader(path_PW));
@@ -94,53 +139,27 @@ public class Db {
 			br_freeWeekPassPeriod.close();
 			br_groupADayPassTime.close();
 
-			listperson.add(list_ID);
-			listperson.add(list_PW);
-			listperson.add(list_Cart);
-			listperson.add(list_paymentHistory);
-			listperson.add(list_Point);
-			listperson.add(list_freeADayPassTime);
-			listperson.add(list_freeDaysPassTime);
-			listperson.add(list_freeWeekPassLastDay);
-			listperson.add(list_groupADayPassTime);
-			listperson.add(list_freeWeekPassPeriod);
-
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 
-	}
+		// map<ID, UserInfo> 객체 만들기
+		for (int i = 0; i < list_ID.size(); i++) {
 
-	// 회원가입 시 txt파일에 정보 삽입
-	public static void createInfo(String id, String pw) {
-		try {
-			BufferedWriter bw_ID = new BufferedWriter(new FileWriter(path_ID, true));
-			BufferedWriter bw_PW = new BufferedWriter(new FileWriter(path_PW, true));
+			UserInfo up = new UserInfo.Builder(list_ID.get(i), list_PW.get(i)).Cart(list_Cart.get(i))
+					.PaymentHistory(list_paymentHistory.get(i)).Point(list_Point.get(i))
+					.freeADayPassTime(list_freeADayPassTime.get(i)).freeDaysPassTime(list_freeDaysPassTime.get(i))
+					.freeWeekPassLastDay(list_freeWeekPassLastDay.get(i))
+					.groupADayPassTime(list_groupADayPassTime.get(i)).freeWeekPassPeriod(list_freeWeekPassPeriod.get(i))
+					.build();
 
-			bw_ID.write(id + "\n");
-			bw_PW.write(pw + "\n");
-
-			bw_ID.close();
-			bw_PW.close();
-
-			// 그 외 정보들 빈칸으로 넣어주기
-			List<String> list_path = Arrays.asList(path_Cart, path_paymentHistory, path_Point, path_freeADayPassTime,
-					path_freeDaysPassTime, path_freeWeekPassLastDay, path_groupADayPassTime, path_freeWeekPassPeriod);
-
-			for (int i = 0; i < list_path.size(); i++) {
-
-				BufferedWriter bw = new BufferedWriter(new FileWriter(list_path.get(i), true));
-				bw.write("" + "\n");
-				bw.close();
-			}
-
-		} catch (Exception e) {
-			// TODO: handle exception
+			mapLoad.put(list_ID.get(i), up);
 		}
-
 	}
-
-	public static void updateInfo(String filename, String userIndex, String update) {
+	
+	
+	// 회원정보 수정(미완)
+	public void updateInfo(String filename, String userIndex, String update) {
 		String path = "A:\\kiosk\\projectStudyCafe\\User_info\\" + filename;
 
 		try {
@@ -152,5 +171,5 @@ public class Db {
 		}
 
 	}
-
+	
 }
