@@ -302,7 +302,7 @@ public class Login_frame extends Db {
 		String PW = textField_pw.getText();
 
 		// 세 가지 조건 모두를 만족해야 로그인 가능
-		if ((list_ID.contains(ID)) && (list_PW.contains(PW)) && (list_ID.indexOf(ID) == list_PW.indexOf(PW))) {
+		if ((list_ID.contains(ID)) && (PW.equals(list_PW.get(list_ID.indexOf(ID))))){
 
 			// 로그인 성공 시, Userinfo 가져와 출력해보기
 
