@@ -158,12 +158,12 @@ public class Db {
 	}
 	
 	
-	// 회원정보 수정(미완)
-	public void updateInfo(String filename, String userIndex, String update) {
+	// 회원정보 수정 - 변경된 map의 내용을 다시 역으로 txt파일에 저장함(새로 쓰기)
+	public void updateDbInfo(String filename) { // 인자로 filename을 받아서, 수정할 txt파일만 업데이트해준다. 
 		String path = "A:\\kiosk\\projectStudyCafe\\User_info\\" + filename;
 
 		try {
-			BufferedWriter bw = new BufferedWriter(new FileWriter(path, true));
+			BufferedWriter bw = new BufferedWriter(new FileWriter(path));
 
 			bw.close();
 		} catch (Exception e) {

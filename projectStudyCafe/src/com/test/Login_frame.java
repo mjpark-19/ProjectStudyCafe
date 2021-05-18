@@ -308,6 +308,7 @@ public class Login_frame extends Db {
 
 			UserInfo userinfo = mapLoad.get(ID); // 로그인한 아이디에 해당하는 value(=Userinfo 객체) 를 저장
 			System.out.println(userinfo);
+			
 			frame.dispose();
 
 		} else {
