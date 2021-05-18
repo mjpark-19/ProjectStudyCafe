@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.swing.JPasswordField;
@@ -25,7 +26,7 @@ public class Db {
 	String path_freeWeekPassLastDay = "A:\\kiosk\\projectStudyCafe\\User_info\\freeWeekPassLastDay.txt";
 	String path_groupADayPassTime = "A:\\kiosk\\projectStudyCafe\\User_info\\groupADayPassTime.txt";
 	String path_freeWeekPassPeriod = "A:\\kiosk\\projectStudyCafe\\User_info\\freeWeekPassPeriod.txt";
-	
+
 	// 각 정보를 리스트에 저장
 	ArrayList<String> list_ID = new ArrayList<String>();
 	ArrayList<String> list_PW = new ArrayList<String>();
@@ -37,9 +38,9 @@ public class Db {
 	ArrayList<String> list_freeWeekPassLastDay = new ArrayList<String>();
 	ArrayList<String> list_groupADayPassTime = new ArrayList<String>();
 	ArrayList<String> list_freeWeekPassPeriod = new ArrayList<String>();
-	
-	// 각 정보를 map<ID, Userinfo> 에 저장. Userinfo엔 pw, cart, poin등의 정보가 모두 담긴다. 
-	HashMap<String, UserInfo> mapLoad = new HashMap<>();
+
+	// 각 정보를 map<ID, Userinfo> 에 저장. Userinfo엔 pw, cart, poin등의 정보가 모두 담긴다.
+	LinkedHashMap<String, UserInfo> mapLoad = new LinkedHashMap<>();
 
 	// Db 생성자
 
@@ -76,7 +77,6 @@ public class Db {
 		}
 
 	}
-
 
 	// txt파일의 정보들을 모두 가져와, Db 클래스 내의 list와 map에 저장해준다.
 	public void readUserInfo() {
@@ -156,14 +156,18 @@ public class Db {
 			mapLoad.put(list_ID.get(i), up);
 		}
 	}
-	
-	
+
 	// 회원정보 수정 - 변경된 map의 내용을 다시 역으로 txt파일에 저장함(새로 쓰기)
-	public void updateDbInfo(String filename) { // 인자로 filename을 받아서, 수정할 txt파일만 업데이트해준다. 
-		String path = "A:\\kiosk\\projectStudyCafe\\User_info\\" + filename;
+	public void updateDbInfo(HashMap<String, UserInfo> inputmap) { // 수정할 pw.txt파일만 업데이트해준다.
+		String path = "A:\\kiosk\\projectStudyCafe\\User_info\\PW.txt";
 
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(path));
+
+			for (String id : inputmap.keySet()) {
+				bw.write(inputmap.get(id).getPW()+"\n");
+				System.out.println(inputmap.get(id).getPW());
+			}
 
 			bw.close();
 		} catch (Exception e) {
@@ -171,5 +175,5 @@ public class Db {
 		}
 
 	}
-	
+
 }

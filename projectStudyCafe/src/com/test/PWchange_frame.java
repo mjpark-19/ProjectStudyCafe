@@ -109,6 +109,7 @@ public class PWchange_frame extends Db {
 					mapLoad.get(ID).setPW(PW); // map의 해당 아이디의 userinfo에 접근해, pw를 초기화한다.
 					System.out.println(mapLoad.get(ID)); // 바뀐 회원정보 출력 (비밀번호 변경됨)
 					System.out.println(mapLoad);
+					updateDbInfo(mapLoad);
 					JOptionPane.showMessageDialog(null, "비밀번호가 변경되었습니다", "비밀번호변경", JOptionPane.DEFAULT_OPTION);
 				}
 			}
@@ -124,9 +125,13 @@ public class PWchange_frame extends Db {
 				String ID = textField_id.getText();
 
 				if (list_ID.contains(ID)) {
-					btn_valid.setText("재전송");
+					
 					valnum = createRannum(); // 난수를 valnum에 넣어줌
 					System.out.println(valnum); // 핸드폰에 전송하는 대신 출력만 함
+					JOptionPane.showMessageDialog(null, "인증번호가 발송되었습니다", "비밀번호변경", JOptionPane.DEFAULT_OPTION);
+					btn_valid.setText("재전송");
+					textField_valcheck.setFocusable(true); // 인증번호 입력칸 활성화
+					textField_valcheck.requestFocus(); // 인증번호 입력칸으로 포커스 이동
 				} else {
 					JOptionPane.showMessageDialog(null, "가입되지 않은 핸드폰 번호입니다", "비밀번호변경", JOptionPane.DEFAULT_OPTION);
 				}
@@ -144,6 +149,7 @@ public class PWchange_frame extends Db {
 		textField_valcheck.setForeground(Color.LIGHT_GRAY);
 		textField_valcheck.setColumns(10);
 		textField_valcheck.setBounds(187, 207, 259, 30);
+		textField_valcheck.setFocusable(false);
 		panel.add(textField_valcheck);
 
 		JButton btn_valcheck = new JButton("\uD655\uC778");
