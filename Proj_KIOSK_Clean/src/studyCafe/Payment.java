@@ -81,7 +81,7 @@ public class Payment {
 //	}
 
 	public void initialize() {
-
+		System.out.println("결제 전 test" + userInfo.getPaymentHistory());
 		bigPanel = new JPanel();
 		bigPanel.setBackground(Color.BLACK);
 		bigPanel.setBounds(-5, -29, 700, 800);
@@ -237,7 +237,7 @@ public class Payment {
 
 						// 카트, 결제내역 저장
 						strCart = s1 + ";";
-						strPaymentHistory = s1 + ";" + s2 + ";" + loginDate + ";" + Point + ";" + usedPoint + ";"
+						strPaymentHistory = s1 + "/" + s2 + "/" + loginDate + "/" + Point + "/" + usedPoint + "/"
 								+ "이용중";
 					}
 				});
@@ -273,7 +273,7 @@ public class Payment {
 		MiniPanelGroupRoom.setLayout(null);
 
 		String[] groupRoom = { "<HTML><body style='text-align:center;'>5인실 1회권(2시간)<br> 12,000원" + "</body></HTML>",
-				"<HTML><body style='text-align:center;'>5인실 1회권 추가(1시간)<br>" + " 6,000원</body></HTML>" };
+				"<HTML><body style='text-align:center;'>5인실 1회권(추가 1시간)<br>" + " 6,000원</body></HTML>" };
 
 		for (int i = 0; i < 2; i++) {
 			int temp = i;
@@ -308,7 +308,7 @@ public class Payment {
 
 					// 카트, 결제내역 저장
 					strCart = s1 + ";";
-					strPaymentHistory = s1 + ";" + s2 + ";" + loginDate + ";" + Point + ";" + usedPoint + ";" + "이용중";
+					strPaymentHistory = s1 + "/" + s2 + "/" + loginDate + "/" + Point + "/" + usedPoint + "/" + "이용중";
 
 				}
 			});
@@ -364,7 +364,7 @@ public class Payment {
 
 						// 카트, 결제내역 저장
 						strCart = s1 + ";";
-						strPaymentHistory = s1 + ";" + s2 + ";" + loginDate + ";" + Point + ";" + usedPoint + ";"
+						strPaymentHistory = s1 + "/" + s2 + "/" + loginDate + "/" + Point + "/" + usedPoint + "/"
 								+ "이용중";
 
 					}
@@ -423,7 +423,7 @@ public class Payment {
 
 					// 카트, 결제내역 저장
 					strCart = s1 + ";";
-					strPaymentHistory = s1 + ";" + s2 + ";" + loginDate + ";" + Point + ";" + usedPoint + ";" + "이용중";
+					strPaymentHistory = s1 + "/" + s2 + "/" + loginDate + "/" + Point + "/" + usedPoint + "/" + "이용중";
 
 				}
 			});
@@ -474,7 +474,7 @@ public class Payment {
 
 					// 카트, 결제내역 저장
 					strCart = s1 + ";";
-					strPaymentHistory = s1 + ";" + s2 + ";" + loginDate + ";" + Point + ";" + usedPoint + ";" + "이용중";
+					strPaymentHistory = s1 + "/" + s2 + "/" + loginDate + "/" + Point + "/" + usedPoint + "/" + "이용중";
 
 				}
 			});
@@ -870,9 +870,12 @@ public class Payment {
 				bigPanel.setVisible(false);
 				buyPanel.setVisible(false);
 
-				userInfo.setCart(strCart);
-				userInfo.setPaymentHistory(strPaymentHistory);
-
+				userInfo.setCart(userInfo.getCart() + ";" + strCart);
+			
+				userInfo.setPaymentHistory(userInfo.getPaymentHistory()+";"+strPaymentHistory);
+	
+				System.out.println("결제 후 test" + userInfo.getPaymentHistory());
+				
 				new AfterLogIn(frame, mainPanel, userInfo);
 
 			}
