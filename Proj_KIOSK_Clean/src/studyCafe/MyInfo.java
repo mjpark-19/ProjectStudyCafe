@@ -132,11 +132,17 @@ public class MyInfo extends DB {
 	 * @return 사용자의 결제내역 정보를 리턴
 	 */
 	public String[][] returnPaymentHistoryData() {
-
 		String[] arr = userInfo.getPaymentHistory().split(";", -1);
 		String[][] data = new String[arr.length][];
-		for (int i = 0; i < arr.length; i++) {
-			data[i] = arr[i].split("/", -1);
+
+		try {
+
+			for (int i = 0; i < arr.length; i++) {
+				data[i] = arr[i].split("/", -1);
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 		return data;
 	}
@@ -153,10 +159,15 @@ public class MyInfo extends DB {
 		String[] freeWeekPassPeriod = userInfo.getFreeWeekPassPeriod().split(";", -1);
 		String[][] data = new String[cartArr.length][3];
 
-		for (int i = 0; i < cartArr.length; i++) {
-			data[i][0] = cartArr[i];
-			data[i][1] = freeADayPassTime[i] + freeDaysPassTime[i];
-			data[i][2] = freeWeekPassPeriod[i];
+		try {
+			for (int i = 0; i < cartArr.length; i++) {
+				data[i][0] = cartArr[i];
+				data[i][1] = freeADayPassTime[i] + freeDaysPassTime[i];
+				data[i][2] = freeWeekPassPeriod[i];
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 
 		return data;
@@ -165,7 +176,7 @@ public class MyInfo extends DB {
 
 	public String[][] returnSeatData() {
 
-		String[][] data = { { "좌석", userInfo.getSeatNo(), "O" } };
+		String[][] data = { { "좌석", userInfo.getSeatNo(), "" } };
 
 		return data;
 

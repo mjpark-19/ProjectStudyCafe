@@ -236,7 +236,7 @@ public class Payment {
 						Point = (pointcal / 20) + "";
 
 						// 카트, 결제내역 저장
-						strCart = s1 + ";";
+						strCart = s1;
 						strPaymentHistory = s1 + "/" + s2 + "/" + loginDate + "/" + Point + "/" + usedPoint + "/"
 								+ "이용중";
 					}
@@ -307,7 +307,7 @@ public class Payment {
 					Point = (pointcal / 20) + "";
 
 					// 카트, 결제내역 저장
-					strCart = s1 + ";";
+					strCart = s1;
 					strPaymentHistory = s1 + "/" + s2 + "/" + loginDate + "/" + Point + "/" + usedPoint + "/" + "이용중";
 
 				}
@@ -363,7 +363,7 @@ public class Payment {
 						Point = (pointcal / 20) + "";
 
 						// 카트, 결제내역 저장
-						strCart = s1 + ";";
+						strCart = s1;
 						strPaymentHistory = s1 + "/" + s2 + "/" + loginDate + "/" + Point + "/" + usedPoint + "/"
 								+ "이용중";
 
@@ -422,7 +422,7 @@ public class Payment {
 					Point = (pointcal / 20) + "";
 
 					// 카트, 결제내역 저장
-					strCart = s1 + ";";
+					strCart = s1;
 					strPaymentHistory = s1 + "/" + s2 + "/" + loginDate + "/" + Point + "/" + usedPoint + "/" + "이용중";
 
 				}
@@ -473,7 +473,7 @@ public class Payment {
 					Point = (pointcal / 20) + "";
 
 					// 카트, 결제내역 저장
-					strCart = s1 + ";";
+					strCart = s1;
 					strPaymentHistory = s1 + "/" + s2 + "/" + loginDate + "/" + Point + "/" + usedPoint + "/" + "이용중";
 
 				}
@@ -862,20 +862,32 @@ public class Payment {
 		btnNext2.setBounds(345, 650, 345, 63);
 		btnNext2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				System.out.println("총값:" + strCart);
-				System.out.println("구매내역:" + strPaymentHistory);
+				System.out.println("결제 전 paymentHito : " + userInfo.getPaymentHistory());
+				System.out.println("결제전 freeAday : " + userInfo.getFreeADayPassTime());
 
 				paymentPanel.setVisible(false);
 				bigPanel.setVisible(false);
 				buyPanel.setVisible(false);
 
-				userInfo.setCart(userInfo.getCart() + ";" + strCart);
-			
-				userInfo.setPaymentHistory(userInfo.getPaymentHistory()+";"+strPaymentHistory);
-	
-				System.out.println("결제 후 test" + userInfo.getPaymentHistory());
-				
+				if (userInfo.getCart().equals("")) {
+					userInfo.setCart(strCart);
+					userInfo.setPaymentHistory(strPaymentHistory);
+
+					userInfo.setFreeADayPassTime("6");
+					userInfo.setFreeDaysPassTime("12");
+					userInfo.setFreeWeekPassPeriod("31");
+				} else {
+					userInfo.setCart(userInfo.getCart() + ";" + strCart);
+					userInfo.setPaymentHistory(userInfo.getPaymentHistory() + ";" + strPaymentHistory);
+
+					userInfo.setFreeADayPassTime(userInfo.getFreeADayPassTime() + ";" + "33");
+					userInfo.setFreeDaysPassTime(userInfo.getFreeDaysPassTime() + ";" + "13");
+					userInfo.setFreeWeekPassPeriod(userInfo.getFreeWeekPassPeriod() + ";" + "31");
+				}
+
+				System.out.println("결제 후 paymentHito : " + userInfo.getPaymentHistory());
+				System.out.println("결제 후 freeAday : " + userInfo.getFreeADayPassTime());
+
 				new AfterLogIn(frame, mainPanel, userInfo);
 
 			}
