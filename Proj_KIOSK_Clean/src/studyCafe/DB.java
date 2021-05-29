@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.lang.module.FindException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -25,9 +26,9 @@ public class DB {
 	String path_freeWeekPassLastDay = ".\\User_info\\freeWeekPassLastDay.txt";
 	String path_groupADayPassTime = ".\\User_info\\groupADayPassTime.txt";
 	String path_freeWeekPassPeriod = ".\\User_info\\freeWeekPassPeriod.txt";
-	
+
 	// 각 정보를 리스트에 저장
-	ArrayList<String> list_ID  = new ArrayList<String>();
+	ArrayList<String> list_ID = new ArrayList<String>();
 	ArrayList<String> list_PW = new ArrayList<String>();
 	ArrayList<String> list_Cart = new ArrayList<String>();
 	ArrayList<String> list_paymentHistory = new ArrayList<String>();
@@ -37,7 +38,8 @@ public class DB {
 	ArrayList<String> list_freeWeekPassLastDay = new ArrayList<String>();
 	ArrayList<String> list_groupADayPassTime = new ArrayList<String>();
 	ArrayList<String> list_freeWeekPassPeriod = new ArrayList<String>();
-//	
+
+
 //	ArrayList<String> list_ID ;
 //	ArrayList<String> list_PW;
 //	ArrayList<String> list_Cart;
@@ -48,7 +50,7 @@ public class DB {
 //	ArrayList<String> list_freeWeekPassLastDay;
 //	ArrayList<String> list_groupADayPassTime;
 //	ArrayList<String> list_freeWeekPassPeriod;
-	// 각 정보를 map<ID, Userinfo> 에 저장. Userinfo엔 pw, cart, poin등의 정보가 모두 담긴다. 
+	// 각 정보를 map<ID, Userinfo> 에 저장. Userinfo엔 pw, cart, poin등의 정보가 모두 담긴다.
 //	HashMap<String, UserInfo> mapInfo;
 //	UserInfo userInfo;
 	// Db 생성자
@@ -71,7 +73,6 @@ public class DB {
 		list_groupADayPassTime = new ArrayList<String>();
 		list_freeWeekPassPeriod = new ArrayList<String>();
 	}
-
 
 	// txt파일의 정보들을 모두 가져와, Db 클래스 내의 list와 map에 저장해준다.
 	HashMap<String, UserInfo> mapInfo = new HashMap<String, UserInfo>();
@@ -146,15 +147,11 @@ public class DB {
 		// map<ID, UserInfo> 객체 만들기
 		for (int i = 0; i < list_ID.size(); i++) {
 
-			UserInfo Info = new UserInfo.Builder(list_ID.get(i), list_PW.get(i))
-					.Cart(list_Cart.get(i))
-					.PaymentHistory(list_paymentHistory.get(i))
-					.Point(list_Point.get(i))
-					.freeADayPassTime(list_freeADayPassTime.get(i))
-					.freeDaysPassTime(list_freeDaysPassTime.get(i))
+			UserInfo Info = new UserInfo.Builder(list_ID.get(i), list_PW.get(i)).Cart(list_Cart.get(i))
+					.PaymentHistory(list_paymentHistory.get(i)).Point(list_Point.get(i))
+					.freeADayPassTime(list_freeADayPassTime.get(i)).freeDaysPassTime(list_freeDaysPassTime.get(i))
 					.freeWeekPassLastDay(list_freeWeekPassLastDay.get(i))
-					.groupADayPassTime(list_groupADayPassTime.get(i))
-					.freeWeekPassPeriod(list_freeWeekPassPeriod.get(i))
+					.groupADayPassTime(list_groupADayPassTime.get(i)).freeWeekPassPeriod(list_freeWeekPassPeriod.get(i))
 					.build();
 
 			mapInfo.put(list_ID.get(i), Info);
@@ -169,7 +166,7 @@ public class DB {
 		return mapInfo;
 
 	}
-	
+
 	// 회원가입 시 txt파일에 정보 삽입
 	public void createDbInfo(String id, String pw) {
 		try {
@@ -198,31 +195,87 @@ public class DB {
 		}
 
 	}
-	
-	// 회원정보 수정(미완)
-		public void changePWInfo(String ID, String PW) {
-			
-			list_ID.indexOf(ID);
-			list_PW.set(list_ID.indexOf(ID), PW);
-			System.out.println("list_ID.indexOf(PW) : "+list_ID.indexOf(ID));
-			System.out.println("list_ID.indexOf(list_ID.indexOf(ID)) : "+list_PW.indexOf(list_ID.indexOf(ID)));
-			System.out.println("list_PW.get(list_ID.indexOf(ID)) : "+list_PW.get(list_ID.indexOf(ID)));;
-			
-		}
-		
-		
-	// 회원정보 수정(미완)
-	public void updateInfo(String filename, String userIndex, String update) {
-		String path = ".\\User_info\\" + filename;
 
-		try {
-			BufferedWriter bw = new BufferedWriter(new FileWriter(path, true));
+	// 회원정보 수정(미완)
+	public void changePWInfo(String ID, String PW) {
 
-			bw.close();
-		} catch (Exception e) {
-			System.out.println("에러");
+		list_ID.indexOf(ID);
+		list_PW.set(list_ID.indexOf(ID), PW);
+		System.out.println("list_ID.indexOf(PW) : " + list_ID.indexOf(ID));
+		System.out.println("list_ID.indexOf(list_ID.indexOf(ID)) : " + list_PW.indexOf(list_ID.indexOf(ID)));
+		System.out.println("list_PW.get(list_ID.indexOf(ID)) : " + list_PW.get(list_ID.indexOf(ID)));
+		;
+
+	}
+
+	/**
+	 * 수정된 userInfo를 mapinfo에 넣어주고, mapinfo의 모든 내용을 txt로 넣어줌
+	 * 
+	 * @param userInfo 로그아웃 시 DB로 넘어온 userInfo를 인자로 받음
+	 * @throws FindException
+	 */
+	public void insertAllInfo(UserInfo userInfo) throws FindException {
+		HashMap<String, UserInfo> mapInfo = readUserInfo();
+		mapInfo.put(userInfo.getID(), userInfo);
+		boolean bool = false;
+
+		for (String id : mapInfo.keySet()) {
+			UserInfo userInfoTemp = mapInfo.get(id);
+			userInfoToTxt(userInfoTemp, bool);
+			bool = true;
 		}
 
 	}
-	
+
+	/**
+	 * 특정 userInfo를 넣으면, userInfo가 가진 필드값을 모두 txt파일에 넣어줌
+	 * 
+	 * @param userInfoTemp map의 모든 userInfo를 일시적으로 저장
+	 * @param bool         true를 넣어주면 이어쓰기, false를 넣어주면 새로쓰기
+	 */
+	public void userInfoToTxt(UserInfo userInfoTemp, boolean bool) {
+
+//			userInfoTemp.getID();
+//			userInfoTemp.getPW();
+//			userInfoTemp.getCart();
+//			userInfoTemp.getFreeADayPassTime();
+//			userInfoTemp.getFreeDaysPassTime();
+//			userInfoTemp.getFreeWeekPassLastDay();
+//			userInfoTemp.getFreeWeekPassPeriod();
+//			userInfoTemp.getGroupADayPassTime();
+//			userInfoTemp.getPaymentHistory();
+//			userInfoTemp.getPoint();
+
+		try {
+			BufferedWriter bwId = new BufferedWriter(new FileWriter(path_ID, bool));
+			BufferedWriter bwPw = new BufferedWriter(new FileWriter(path_PW, bool));
+
+			bwId.write(userInfoTemp.getID() + "\n");
+			bwPw.write(userInfoTemp.getPW() + "\n");
+
+			bwId.close();
+			bwPw.close();
+
+			// 그 외 정보들 빈칸으로 넣어주기
+			List<String> listPath = Arrays.asList(path_Cart, path_paymentHistory, path_Point, path_freeADayPassTime,
+					path_freeDaysPassTime, path_freeWeekPassLastDay, path_groupADayPassTime, path_freeWeekPassPeriod);
+
+			List<String> listInfo = Arrays.asList(userInfoTemp.getCart(), userInfoTemp.getPaymentHistory(),
+					userInfoTemp.getPaymentHistory(), userInfoTemp.getFreeADayPassTime(),
+					userInfoTemp.getFreeDaysPassTime(), userInfoTemp.getFreeWeekPassLastDay(),
+					userInfoTemp.getGroupADayPassTime(), userInfoTemp.getFreeWeekPassPeriod());
+
+			for (int i = 0; i < listPath.size(); i++) {
+
+				BufferedWriter bw = new BufferedWriter(new FileWriter(listPath.get(i), bool));
+				bw.write("" + "\n");
+				bw.close();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
 }
