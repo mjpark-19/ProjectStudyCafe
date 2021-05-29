@@ -14,7 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 
-
 public class AfterLogIn extends DB {
 
 	// 변수 선언
@@ -335,11 +334,6 @@ public class AfterLogIn extends DB {
 			String strTimeWeek) {
 		System.out.println(" useTimePanelSelect ");
 
-		// 테스트용 - 실제 운영 시 삭제
-		userInfo.setCart("자유석 시간권(10시간);자유석 기간권(4주);5인실 일회권(3시간)");
-//		userInfo.setCart("자유석 시간권(10시간)");
-//		userInfo.setCart("");
-
 		// 보유한 상품이 있으면 아래 코드 진행
 		if (userInfo.getCart() != "") {
 
@@ -359,7 +353,7 @@ public class AfterLogIn extends DB {
 							Seat.tempType = "group";
 						} else if (e.getActionCommand().contains("시간권")) {
 							Seat.tempType = "time";
-						} else if (e.getActionCommand().contains("일회권")) {
+						} else if (e.getActionCommand().contains("1회권")) {
 							Seat.tempType = "hour";
 						} else if (e.getActionCommand().contains("기간권")) {
 							Seat.tempType = "week";

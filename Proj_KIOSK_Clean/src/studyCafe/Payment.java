@@ -67,21 +67,21 @@ public class Payment {
 
 	}
 
-//	
-//	public Payment(JFrame frame, JPanel mainPanel, UserInfo userInfo, JLabel lblMainTime, JLabel lblTimer, JPanel bigPanel) {
-//		this.frame = frame;
-//		this.mainPanel = mainPanel;
-//		this.userInfo = userInfo; 
-//		this.lblMainTime = lblMainTime;
-//		this.lblTimer = lblTimer;
-//		
-//		this.bigPanel=bigPanel; 
-//		initialize();
+//   
+//   public Payment(JFrame frame, JPanel mainPanel, UserInfo userInfo, JLabel lblMainTime, JLabel lblTimer, JPanel bigPanel) {
+//      this.frame = frame;
+//      this.mainPanel = mainPanel;
+//      this.userInfo = userInfo; 
+//      this.lblMainTime = lblMainTime;
+//      this.lblTimer = lblTimer;
+//      
+//      this.bigPanel=bigPanel; 
+//      initialize();
 //
-//	}
+//   }
 
 	public void initialize() {
-		System.out.println("결제 전 test" + userInfo.getPaymentHistory());
+
 		bigPanel = new JPanel();
 		bigPanel.setBackground(Color.BLACK);
 		bigPanel.setBounds(-5, -29, 700, 800);
@@ -183,19 +183,20 @@ public class Payment {
 		buyPanel.add(MiniPanelFreeSeats);
 		MiniPanelFreeSeats.setLayout(null);
 
-		String[] FreeSeat = { "<HTML><body style='text-align:center;'>자유석 1회권(2시간)<br> 3,000원</body>" + "</HTML>",
-				"<HTML><body style='text-align:center;'>자유석 1회권(4시간)<br> 5,000원</body>" + "</HTML>",
-				"<HTML><body style='text-align:center;'>자유석 1회권(6시간)<br> 7,000원</body>" + "</HTML>",
-				"<HTML><body style='text-align:center;'>자유석 1회권 (추가 1시간)<br> 1,000원" + "</body></HTML>",
-				"<HTML><body style='text-align:center;'>자유석 시간권(20시간)<br> 29,000원</body></HTML>",
-				"<HTML><body style='text-align:center;'>자유석 시간권(50시간)<br> 59,000원</body></HTML>",
-				"<HTML><body style='text-align:" + "center;'>자유석 시간권(100시간)<br> 88,000원</body></HTML>",
+		// 자유석 기간권(주)
+		String[] FreeSeat = { "<HTML><body style='text-align:center;'>자유석 1회권(2시간)<br>3,000원</body>" + "</HTML>",
+				"<HTML><body style='text-align:center;'>자유석 1회권(4시간)<br>5,000원</body>" + "</HTML>",
+				"<HTML><body style='text-align:center;'>자유석 1회권(6시간)<br>7,000원</body>" + "</HTML>",
+				"<HTML><body style='text-align:center;'>자유석 1회권 (추가 1시간)<br>1,000원" + "</body></HTML>",
+				"<HTML><body style='text-align:center;'>자유석 시간권(20시간)<br>29,000원</body></HTML>",
+				"<HTML><body style='text-align:center;'>자유석 시간권(50시간)<br>59,000원</body></HTML>",
+				"<HTML><body style='text-align:" + "center;'>자유석 시간권(100시간)<br>88,000원</body></HTML>",
 				"<HTML><body style='text-align:center;'>\uC790\uC720\uC11D"
-						+ " \uAE30\uAC04\uAD8C(1\uC8FC)<br> 40,000\uC6D0</body></HTML>",
+						+ " \uAE30\uAC04\uAD8C(1\uC8FC)<br>40,000\uC6D0</body></HTML>",
 				"<HTML><body style='text-align:center;'>\uC790\uC720\uC11D "
-						+ "\uAE30\uAC04\uAD8C(2\uC8FC)<br> 75,000\uC6D0</body></HTML>",
+						+ "\uAE30\uAC04\uAD8C(2\uC8FC)<br>75,000\uC6D0</body></HTML>",
 				"<HTML><body style='text-align:center;'>\uC790\uC720\uC11D"
-						+ " \uAE30\uAC04\uAD8C(4\uC8FC)<br> 100,000\uC6D0</body></HTML>" };
+						+ " \uAE30\uAC04\uAD8C(4\uC8FC)<br>100,000\uC6D0</body></HTML>" };
 
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
@@ -209,15 +210,15 @@ public class Payment {
 				freeSeatBtn.setBounds(24 + (207 * i), 22 + (95 * j), 182, 67);
 				freeSeatBtn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-//		                	freeSeatBtn.setEnabled(false);
-//		                	freeSeatBtn.setBackground(Color.GRAY);
+//                         freeSeatBtn.setEnabled(false);
+//                         freeSeatBtn.setBackground(Color.GRAY);
 						// 상품, 가격 변수에 넣기
 						product = FreeSeat[temp + (temp2 * 3)].split("<br>")[0];
 						s1 = product.substring(39, product.length());
 						price = FreeSeat[temp + (temp2 * 3)].split("<br>")[1];
-						s2 = price.substring(1, price.length() - 15);
-						System.out.println(s1);
-						System.out.println(s2);
+						s2 = price.substring(0, price.length() - 15);
+						System.out.println("s1:" + s1);
+						System.out.println("s2:" + s2);
 
 						// 결제창 화면에 구입상품, 가격 띄우기
 						selectedProductDetail.setText(s1 + "\0" + s2 + "원");
@@ -239,6 +240,7 @@ public class Payment {
 						strCart = s1;
 						strPaymentHistory = s1 + "/" + s2 + "/" + loginDate + "/" + Point + "/" + usedPoint + "/"
 								+ "이용중";
+
 					}
 				});
 				MiniPanelFreeSeats.add(freeSeatBtn);
@@ -272,8 +274,8 @@ public class Payment {
 		buyPanel.add(MiniPanelGroupRoom);
 		MiniPanelGroupRoom.setLayout(null);
 
-		String[] groupRoom = { "<HTML><body style='text-align:center;'>5인실 1회권(2시간)<br> 12,000원" + "</body></HTML>",
-				"<HTML><body style='text-align:center;'>5인실 1회권(추가 1시간)<br>" + " 6,000원</body></HTML>" };
+		String[] groupRoom = { "<HTML><body style='text-align:center;'>5인실 1회권(2시간)<br>12,000원" + "</body></HTML>",
+				"<HTML><body style='text-align:center;'>5인실 1회권 추가(1시간)<br>" + "6,000원</body></HTML>" };
 
 		for (int i = 0; i < 2; i++) {
 			int temp = i;
@@ -288,12 +290,15 @@ public class Payment {
 					product = groupRoom[temp].split("<br>")[0];
 					s1 = product.substring(39, product.length());
 					price = groupRoom[temp].split("<br>")[1];
-					s2 = price.substring(1, price.length() - 15);
+					s2 = price.substring(0, price.length() - 15);
+					System.out.println("s1:" + s1);
+					System.out.println("s2:" + s2);
 
 					// 결제창 화면에 구입상품, 가격 띄우기
 					selectedProductDetail.setText(s1 + "\0" + s2 + "원");
 					totalAmount.setText(s2 + "원");
-
+					System.out.println("s1:" + s1);
+					System.out.println("s2:" + s2);
 					// 포인트계산
 					int pointcal = 0;
 					if (s2.length() == 5) {
@@ -321,12 +326,12 @@ public class Payment {
 		buyPanel.add(MiniPanelADayPass);
 		MiniPanelADayPass.setLayout(null);
 
-		String[] aDayPass = { "<HTML><body style='text-align:center;'>자유석 1회권(2시간)<br> 3,000원</body>" + "</HTML>",
-				"<HTML><body style='text-align:center;'>자유석 1회권(4시간)<br> 5,000원</body>" + "</HTML>",
-				"<HTML><body style='text-align:center;'>자유석 1회권(6시간)<br> 7,000원</body>" + "</HTML>",
-				"<HTML><body style='text-align:center;'>자유석 1회권(추가 1시간)<br> 1,000원" + "</body></HTML>",
-				"<HTML><body style='text-align:center;'>5인실 1회권(2시간)<br> 12,000원" + "</body></HTML>",
-				"<HTML><body style='text-align:center;'>5인실 1회권(추가 1시간)<br>" + " 6,000원</body></HTML>" };
+		String[] aDayPass = { "<HTML><body style='text-align:center;'>자유석 1회권(2시간)<br>3,000원</body>" + "</HTML>",
+				"<HTML><body style='text-align:center;'>자유석 1회권(4시간)<br>5,000원</body>" + "</HTML>",
+				"<HTML><body style='text-align:center;'>자유석 1회권(6시간)<br>7,000원</body>" + "</HTML>",
+				"<HTML><body style='text-align:center;'>자유석 1회권(추가 1시간)<br>1,000원" + "</body></HTML>",
+				"<HTML><body style='text-align:center;'>5인실 1회권(2시간)<br>12,000원" + "</body></HTML>",
+				"<HTML><body style='text-align:center;'>5인실 1회권(추가 1시간)<br>" + "6,000원</body></HTML>" };
 
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 2; j++) {
@@ -344,7 +349,9 @@ public class Payment {
 						product = aDayPass[temp + (temp2 * 3)].split("<br>")[0];
 						s1 = product.substring(39, product.length());
 						price = aDayPass[temp + (temp2 * 3)].split("<br>")[1];
-						s2 = price.substring(1, price.length() - 15);
+						s2 = price.substring(0, price.length() - 15);
+						System.out.println("s1:" + s1);
+						System.out.println("s2:" + s2);
 
 						// 결제창 화면에 구입상품, 가격 띄우기
 						selectedProductDetail.setText(s1 + "\0" + s2 + "원");
@@ -381,11 +388,11 @@ public class Payment {
 
 		String[] weekpass = {
 				"<HTML><body style='text-align:center;'>\uC790\uC720\uC11D"
-						+ " \uAE30\uAC04\uAD8C(1\uC8FC)<br> 40,000원</body></HTML>",
+						+ " \uAE30\uAC04\uAD8C(1\uC8FC)<br>40,000원</body></HTML>",
 				"<HTML><body style='text-align:center;'>\uC790\uC720\uC11D "
-						+ "\uAE30\uAC04\uAD8C(2\uC8FC)<br> 75,000원</body></HTML>",
+						+ "\uAE30\uAC04\uAD8C(2\uC8FC)<br>75,000원</body></HTML>",
 				"<HTML><body style='text-align:center;'>\uC790\uC720\uC11D"
-						+ " \uAE30\uAC04\uAD8C(4\uC8FC)<br> 100,000원</body></HTML>" };
+						+ " \uAE30\uAC04\uAD8C(4\uC8FC)<br>100,000원</body></HTML>" };
 
 		for (int i = 0; i < 3; i++) {
 			int temp = i;
@@ -400,11 +407,14 @@ public class Payment {
 					product = weekpass[temp].split("<br>")[0];
 					s1 = product.substring(39, product.length());
 					price = weekpass[temp].split("<br>")[1];
-					s2 = price.substring(1, price.length() - 15);
-//					s2 = price.split("원")[0];
+					s2 = price.substring(0, price.length() - 15);
+//               s2 = price.split("원")[0];
 
-					System.out.println("s2.substring(0, 3): " + s2.substring(0, 3));
-					System.out.println("s2.substring(4) : " + s2.substring(4));
+					System.out.println("s1:" + s1);
+					System.out.println("s2:" + s2);
+
+//               System.out.println("s2.substring(0, 3): "+s2.substring(0, 3));
+//               System.out.println("s2.substring(4) : "+s2.substring(4));
 					// 결제창 화면에 구입상품, 가격 띄우기
 					selectedProductDetail.setText(s1 + "\0" + s2 + "원");
 					totalAmount.setText(s2 + "원");
@@ -438,8 +448,8 @@ public class Payment {
 		MiniPanelDayPass.setLayout(null);
 
 		String[] dayPass = { "<HTML><body style='text-align:center;'>자유석 시간권(20시간)<br>" + "29,000원</body></HTML>",
-				"<HTML><body style='text-align:center;'>" + "자유석 시간권(50시간)<br> 59,000원</body></HTML>",
-				"<HTML><body style='text-align:" + "center;'>자유석 시간권(100시간)<br> 88,000원</body></HTML>" };
+				"<HTML><body style='text-align:center;'>" + "자유석 시간권(50시간)<br>59,000원</body></HTML>",
+				"<HTML><body style='text-align:" + "center;'>자유석 시간권(100시간)<br>88,000원</body></HTML>" };
 		for (int i = 0; i < 3; i++) {
 			int temp = i;
 			JToggleButton DayPassBtn = new JToggleButton(dayPass[i]);
@@ -453,8 +463,10 @@ public class Payment {
 					product = dayPass[temp].split("<br>")[0];
 					s1 = product.substring(39, product.length());
 					price = dayPass[temp].split("<br>")[1];
-//					s2 = price.substring(1, price.length() - 15);
+//               s2 = price.substring(1, price.length() - 15);
 					s2 = price.split("원")[0];
+					System.out.println("s1:" + s1);
+					System.out.println("s2:" + s2);
 
 					// 결제창 화면에 구입상품, 가격 띄우기
 					selectedProductDetail.setText(s1 + "\0" + s2 + "원");
@@ -468,7 +480,7 @@ public class Payment {
 					else if (s2.length() == 6) {
 						pointcal = Integer.parseInt(s2.substring(0, 2) + s2.substring(3)); // 만원
 					} else {
-						pointcal = Integer.parseInt(s2.substring(0, 3) + s2.substring(3)); // 십만원
+						pointcal = Integer.parseInt(s2.substring(0, 3) + s2.substring(4)); // 십만원
 					}
 					Point = (pointcal / 20) + "";
 
@@ -496,9 +508,10 @@ public class Payment {
 
 		FreeSeats.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				for (JPanel bigPanel : AllType) {
-					if (bigPanel != MiniPanelFreeSeats)
-						bigPanel.setVisible(false);
+
+				for (JPanel p : AllType) {
+					if (p != MiniPanelFreeSeats)
+						p.setVisible(false);
 					else
 						MiniPanelFreeSeats.setVisible(!MiniPanelFreeSeats.isVisible());
 				}
@@ -507,9 +520,9 @@ public class Payment {
 
 		GroupRoom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				for (JPanel bigPanel : AllType) {
-					if (bigPanel != MiniPanelGroupRoom)
-						bigPanel.setVisible(false);
+				for (JPanel p : AllType) {
+					if (p != MiniPanelGroupRoom)
+						p.setVisible(false);
 					else
 						MiniPanelGroupRoom.setVisible(!MiniPanelGroupRoom.isVisible());
 				}
@@ -517,9 +530,9 @@ public class Payment {
 		});
 		WeekPass.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				for (JPanel bigPanel : AllType) {
-					if (bigPanel != MiniPanelWeekPass) {
-						bigPanel.setVisible(false);
+				for (JPanel p : AllType) {
+					if (p != MiniPanelWeekPass) {
+						p.setVisible(false);
 						// ADayPass.setVisible(false);
 						// DayPass.setVisible(false);
 
@@ -534,9 +547,9 @@ public class Payment {
 
 		ADayPass.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				for (JPanel bigPanel : AllType) {
-					if (bigPanel != MiniPanelADayPass) {
-						bigPanel.setVisible(false);
+				for (JPanel p : AllType) {
+					if (p != MiniPanelADayPass) {
+						p.setVisible(false);
 						// WeekPass.setVisible(false);
 						// DayPass.setVisible(false);
 					} else
@@ -549,9 +562,9 @@ public class Payment {
 		});
 		DayPass.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				for (JPanel bigPanel : AllType) {
-					if (bigPanel != MiniPanelDayPass) {
-						bigPanel.setVisible(false);
+				for (JPanel p : AllType) {
+					if (p != MiniPanelDayPass) {
+						p.setVisible(false);
 						// WeekPass.setVisible(false);
 						// ADayPass.setVisible(false);
 					} else
@@ -604,7 +617,8 @@ public class Payment {
 				bigPanel.setVisible(false);
 				buyPanel.setVisible(false);
 				paymentPanel.setVisible(false);
-				new AfterLogIn(frame, mainPanel, userInfo);
+//            new AfterLogIn(frame, mainPanel, userInfo);
+				AfterLogIn afterLogin = new AfterLogIn(frame, mainPanel, userInfo);
 			}
 		});
 		backToHome.setBackground(Color.ORANGE);
@@ -623,7 +637,7 @@ public class Payment {
 				bigPanel.setVisible(false);
 				buyPanel.setVisible(false);
 				paymentPanel.setVisible(false);
-				mainPanel.setVisible(true);
+
 				Main.id = null;
 				userInfo = null;
 			}
@@ -642,13 +656,15 @@ public class Payment {
 				bigPanel.setVisible(false);
 				buyPanel.setVisible(false);
 				paymentPanel.setVisible(false);
-				new AfterLogIn(frame, mainPanel, userInfo);
+//            new AfterLogIn(frame, mainPanel, userInfo);
+				AfterLogIn afterLogin = new AfterLogIn(frame, mainPanel, userInfo);
+
 			}
 		});
 		btnPrevious.setFont(new Font("굴림", Font.BOLD, 18));
 		btnPrevious.setBackground(Color.ORANGE);
 		btnPrevious.setBounds(0, 650, 345, 63);
-//		btnPrevious.setBounds(0, 700, 345, 63);
+//      btnPrevious.setBounds(0, 700, 345, 63);
 		buyPanel.add(btnPrevious);
 
 		// 다음버튼
@@ -663,7 +679,7 @@ public class Payment {
 		btnNext.setFont(new Font("굴림", Font.BOLD, 18));
 		btnNext.setBackground(Color.ORANGE);
 		btnNext.setBounds(345, 650, 345, 63);
-//		btnNext.setBounds(345, 700, 345, 63);
+//      btnNext.setBounds(345, 700, 345, 63);
 		buyPanel.add(btnNext);
 
 		//////////////////////////// 결제 패널/////////////////////////////////////////
@@ -855,44 +871,175 @@ public class Payment {
 		paymentPanel.add(btnPrevious2);
 
 		// 다음버튼(결제버튼)
-		// 다음버튼(결제버튼)
 		JButton btnNext2 = new JButton(">>결제");
 		btnNext2.setFont(new Font("굴림", Font.BOLD, 18));
 		btnNext2.setBackground(Color.ORANGE);
 		btnNext2.setBounds(345, 650, 345, 63);
 		btnNext2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("결제 전 paymentHito : " + userInfo.getPaymentHistory());
-				System.out.println("결제전 freeAday : " + userInfo.getFreeADayPassTime());
 
-				paymentPanel.setVisible(false);
-				bigPanel.setVisible(false);
-				buyPanel.setVisible(false);
+				System.out.println("총값:" + strCart);
+				System.out.println("구매내역:" + strPaymentHistory);
+
+				System.out.println("결제 전 paymentHito : " + userInfo.getPaymentHistory());
+				System.out.println("결제 전 cart : " + userInfo.getCart());
+				System.out.println("결제 전 freeAday : " + userInfo.getFreeADayPassTime());
+				System.out.println("결제 전 freeDays : " + userInfo.getFreeDaysPassTime());
+				System.out.println("결제 전 freeWeek : " + userInfo.getFreeWeekPassPeriod());
+
+				// 포인트 누적
+				if (userInfo.getPoint().equals("")) {
+					System.out.println("userInfo.getPoint()==\" \"");
+					userInfo.setPoint(Point);
+				} else {
+					System.out.println("! userInfo.getPoint()==\" \"");
+
+					int p1 = Integer.parseInt(userInfo.getPoint());
+					int p2 = Integer.parseInt(Point);
+					userInfo.setPoint(p1 + p2 + "");
+				}
 
 				if (userInfo.getCart().equals("")) {
 					userInfo.setCart(strCart);
 					userInfo.setPaymentHistory(strPaymentHistory);
+					setTime();
 
-					userInfo.setFreeADayPassTime("6");
-					userInfo.setFreeDaysPassTime("12");
-					userInfo.setFreeWeekPassPeriod("31");
 				} else {
 					userInfo.setCart(userInfo.getCart() + ";" + strCart);
 					userInfo.setPaymentHistory(userInfo.getPaymentHistory() + ";" + strPaymentHistory);
+					setTime();
 
-					userInfo.setFreeADayPassTime(userInfo.getFreeADayPassTime() + ";" + "33");
-					userInfo.setFreeDaysPassTime(userInfo.getFreeDaysPassTime() + ";" + "13");
-					userInfo.setFreeWeekPassPeriod(userInfo.getFreeWeekPassPeriod() + ";" + "31");
 				}
 
 				System.out.println("결제 후 paymentHito : " + userInfo.getPaymentHistory());
+				System.out.println("결제 후 cart : " + userInfo.getCart());
 				System.out.println("결제 후 freeAday : " + userInfo.getFreeADayPassTime());
+				System.out.println("결제 후 freeDays : " + userInfo.getFreeDaysPassTime());
+				System.out.println("결제 후 freeWeek : " + userInfo.getFreeWeekPassPeriod());
 
-				new AfterLogIn(frame, mainPanel, userInfo);
+				bigPanel.setVisible(false);
+				AfterLogIn afterLogin = new AfterLogIn(frame, mainPanel, userInfo);
 
 			}
 		});
 		paymentPanel.add(btnNext2);
+	}
 
+	public void setTime() { // 수정
+//      String strCart = "자유석 1회권(2시간)";
+//      String strCart = "자유석 1회권(추가 1시간)";
+//      String strCart = "자유석 시간권(20시간)";
+//      String strCart = "자유석 시간권(100시간)";
+//      String strCart = "자유석 기간권(4주)";
+//      String strCart = "5인실 1회권(2시간)";
+//      String strCart = "5인실 1회권(추가 1시간)";
+
+		System.out.println(strCart.charAt(1));
+
+		if (strCart.charAt(4) == '1') {
+			System.out.println("1회권 일치");
+
+			if (strCart.charAt(8) == '추') {
+				System.out.println("추가 일치 " + strCart.charAt(11));
+				String removeRegEx = ".*\\(추가\\s"; //
+				System.out.println(strCart.replaceAll(removeRegEx, "").replaceAll("\\D", ""));
+				int n1 = Integer.parseInt(userInfo.getFreeADayPassTime());
+				int n2 = Integer.parseInt(strCart.replaceAll(removeRegEx, "").replaceAll("\\D", ""));
+				userInfo.setFreeADayPassTime(n1 + n2 + "");
+				userInfo.setFreeDaysPassTime("");
+				userInfo.setFreeWeekPassPeriod("");
+
+			} else {
+				String removeRegEx = ".*\\("; //
+				System.out.println(strCart.replaceAll(removeRegEx, "").replaceAll("\\D", ""));
+				int n2 = Integer.parseInt(strCart.replaceAll(removeRegEx, "").replaceAll("\\D", ""));
+
+				userInfo.setFreeADayPassTime(userInfo.getFreeADayPassTime() + twoDigit(n2) + ":00:00;"); // 특정 값이 추가될 때,
+																											// 다른 시간 or
+																											// 기간값도 공백으로
+																											// 넣어줌
+				userInfo.setFreeDaysPassTime(userInfo.getFreeDaysPassTime() + ";");
+				userInfo.setFreeWeekPassPeriod(userInfo.getFreeWeekPassPeriod() + ";");
+				userInfo.setGroupADayPassTime(userInfo.getGroupADayPassTime() + ";");
+				userInfo.setFreeWeekPassLastDay(userInfo.getFreeWeekPassLastDay() + ";");
+
+			}
+
+		} else if (strCart.charAt(4) == '시') {
+			System.out.println("시간권 일치");
+
+			if (strCart.charAt(8) == '추') {
+				System.out.println("추 일치 " + strCart.charAt(11));
+				String removeRegEx = ".*\\(추가\\s"; //
+				System.out.println(strCart.replaceAll(removeRegEx, "").replaceAll("\\D", ""));
+				int n1 = Integer.parseInt(userInfo.getFreeDaysPassTime());
+				int n2 = Integer.parseInt(strCart.replaceAll(removeRegEx, "").replaceAll("\\D", ""));
+				userInfo.setFreeDaysPassTime(n1 + n2 + "");
+				userInfo.setFreeADayPassTime("");
+				userInfo.setFreeWeekPassPeriod("");
+
+			} else {
+				System.out.println("추 비일치 ");
+				String removeRegEx = ".*\\("; //
+
+				System.out.println(strCart.replaceAll(removeRegEx, "").replaceAll("\\D", ""));
+				int n2 = Integer.parseInt(strCart.replaceAll(removeRegEx, "").replaceAll("\\D", ""));
+
+				userInfo.setFreeADayPassTime(userInfo.getFreeADayPassTime() + ";");
+				userInfo.setFreeDaysPassTime(userInfo.getFreeDaysPassTime() + twoDigit(n2) + ":00:00;");
+				userInfo.setFreeWeekPassPeriod(userInfo.getFreeWeekPassPeriod() + ";");
+				userInfo.setGroupADayPassTime(userInfo.getGroupADayPassTime() + ";");
+				userInfo.setFreeWeekPassLastDay(userInfo.getFreeWeekPassLastDay() + ";");
+
+			}
+
+		} else if (strCart.charAt(4) == '기') {
+			System.out.println("기간권 일치");
+
+			Integer.parseInt(strCart.charAt(8) + "");
+			String removeRegEx = ".*\\("; //
+			System.out.println(Integer.parseInt(strCart.replaceAll(removeRegEx, "").replaceAll("\\D", "")) * 7);
+
+			int n2 = Integer.parseInt(strCart.replaceAll(removeRegEx, "").replaceAll("\\D", "")) * 7;
+
+			int dayPass = Integer.parseInt(strCart.replaceAll(removeRegEx, "").replaceAll("\\D", "")) * 7;
+
+			userInfo.setFreeWeekPassLastDay(userInfo.getFreeWeekPassLastDay() + WeekPass.lastDayCal(dayPass) + ";");
+			userInfo.setFreeADayPassTime(userInfo.getFreeADayPassTime() + ";");
+			userInfo.setFreeDaysPassTime(userInfo.getFreeDaysPassTime() + ";");
+			userInfo.setFreeWeekPassPeriod(userInfo.getFreeWeekPassPeriod() + ";");
+			userInfo.setGroupADayPassTime(userInfo.getGroupADayPassTime() + ";");
+
+		} else if (strCart.charAt(0) == '5') {
+			System.out.println("5인석 일치");
+
+			if (strCart.charAt(8) == '추') {
+				System.out.println("추 일치");
+				String removeRegEx = ".*\\(추가\\s"; //
+				System.out.println(strCart.replaceAll(removeRegEx, "").replaceAll("\\D", ""));
+				int n1 = Integer.parseInt(userInfo.getGroupADayPassTime());
+				int n2 = Integer.parseInt(strCart.replaceAll(removeRegEx, "").replaceAll("\\D", ""));
+				userInfo.setGroupADayPassTime(n1 + n2 + "");
+
+			} else {
+				System.out.println("추 비일치 ");
+				String removeRegEx = ".*\\("; //
+				System.out.println(strCart.replaceAll(removeRegEx, "").replaceAll("\\D", ""));
+
+				int n2 = Integer.parseInt(strCart.replaceAll(removeRegEx, "").replaceAll("\\D", ""));
+
+				userInfo.setGroupADayPassTime(userInfo.getGroupADayPassTime() + twoDigit(n2) + ":00:00;");
+				userInfo.setFreeWeekPassLastDay(userInfo.getFreeWeekPassLastDay() + ";");
+				userInfo.setFreeADayPassTime(userInfo.getFreeADayPassTime() + ";");
+				userInfo.setFreeDaysPassTime(userInfo.getFreeDaysPassTime() + ";");
+				userInfo.setFreeWeekPassPeriod(userInfo.getFreeWeekPassPeriod() + ";");
+
+			}
+
+		}
+	}
+
+	static String twoDigit(int t) {
+		return (0 <= t && t < 10) ? "0" + t : "" + t;
 	}
 }

@@ -15,6 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 public class MyInfo extends DB {
 	JFrame frame;
@@ -98,7 +100,7 @@ public class MyInfo extends DB {
 
 		JLabel lblPoint = new JLabel(String.format("포인트 : %sP", userInfo.getPoint())); // 보유 포인트
 		lblPoint.setForeground(Color.RED);
-		lblPoint.setBounds(347, 17, 57, 15);
+		lblPoint.setBounds(320, 17, 57, 15);
 		innerPanel.add(lblPoint);
 
 		// 버튼 리스트 KeyPad 클래스에 전달 - 퇴실 패널을 열 때 버튼들이 겹쳐서 함께 떠있는 상황 방지
@@ -157,13 +159,23 @@ public class MyInfo extends DB {
 		String[] freeADayPassTime = userInfo.getFreeADayPassTime().split(";", -1);
 		String[] freeDaysPassTime = userInfo.getFreeDaysPassTime().split(";", -1);
 		String[] freeWeekPassPeriod = userInfo.getFreeWeekPassPeriod().split(";", -1);
+		String[] groupADayPassTime = userInfo.getGroupADayPassTime().split(";", -1);
+		String[] freeWeekPassLastDay = userInfo.getFreeWeekPassLastDay().split(";", -1);
 		String[][] data = new String[cartArr.length][3];
 
 		try {
 			for (int i = 0; i < cartArr.length; i++) {
 				data[i][0] = cartArr[i];
-				data[i][1] = freeADayPassTime[i] + freeDaysPassTime[i];
-				data[i][2] = freeWeekPassPeriod[i];
+				if (cartArr[i].charAt(4) == '1') {
+					data[i][1] = freeADayPassTime[i];
+				} else if (cartArr[i].charAt(4) == '시') {
+					data[i][1] = freeDaysPassTime[i];
+				} else if (cartArr[i].charAt(4) == '5') {
+					data[i][1] = groupADayPassTime[i];
+				} else {
+					data[i][2] = freeWeekPassLastDay[i];
+				}
+
 			}
 
 		} catch (Exception e) {
@@ -201,11 +213,13 @@ public class MyInfo extends DB {
 		seatInfoTable.getTableHeader().setBackground(Color.black);
 		seatInfoTable.getTableHeader().setForeground(Color.white);
 		seatInfoTable.getTableHeader().setPreferredSize(new Dimension(0, 35));
+		seatInfoTable.getCellRenderer(2, 2);
 		seatInfoTable.setForeground(new Color(0, 0, 0));
 		seatInfoTable.setBounds(41, 358, 618, 134);
 		JScrollPane sp1 = new JScrollPane(seatInfoTable);
 		sp1.setBounds(41, 254, 618, 104);
 		myInfoPanel.add(sp1);
+		alignCenter(seatInfoTable);
 
 		cartInfoTable = new JTable(data2, colNames2);
 		cartInfoTable.getTableHeader().setBackground(Color.black);
@@ -215,6 +229,8 @@ public class MyInfo extends DB {
 		JScrollPane sp2 = new JScrollPane(cartInfoTable);
 		sp2.setBounds(41, 435, 618, 104);
 		myInfoPanel.add(sp2);
+		alignCenter(cartInfoTable);
+		
 
 		paymentHistoryTable = new JTable(data3, colNames3);
 		paymentHistoryTable.getTableHeader().setBackground(Color.black);
@@ -225,6 +241,7 @@ public class MyInfo extends DB {
 		JScrollPane sp3 = new JScrollPane(paymentHistoryTable);
 		sp3.setBounds(41, 607, 618, 114);
 		myInfoPanel.add(sp3);
+		alignCenter(paymentHistoryTable);
 
 	}
 
@@ -263,4 +280,17 @@ public class MyInfo extends DB {
 		logOut.setBounds(476, 0, 212, 49);
 		myInfoPanel.add(logOut);
 	}
+
+	public void alignCenter(JTable table) {
+		DefaultTableCellRenderer tScheduleCellRenderer = new DefaultTableCellRenderer();
+		tScheduleCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+		TableColumnModel tcmSchedule = table.getColumnModel();
+
+		for (int i = 0; i < tcmSchedule.getColumnCount(); i++) {
+
+			tcmSchedule.getColumn(i).setCellRenderer(tScheduleCellRenderer);
+
+		}
+	}
+
 }
