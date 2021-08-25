@@ -7,32 +7,39 @@
 
 - 메인 화면
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/cfc4928a-22e0-4090-891f-218eabd497e5/Untitled.png)
+![메인](https://user-images.githubusercontent.com/76434390/130803273-236afff4-fd1f-4439-8481-819950c6a072.png)
+
 
 - 회원가입 및 중복확인
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7dcc994d-cd73-45d9-a2db-4d1035637d26/Untitled.png)
+![회원가입및중복확인](https://user-images.githubusercontent.com/76434390/130803301-9c85c3ba-7077-45e4-a08d-befd8f98549e.png)
+
 
 - 내 정보 보기
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/46b08ba5-991e-412e-b56b-130cb1582c1a/Untitled.png)
+![내정보보기](https://user-images.githubusercontent.com/76434390/130803320-7e1c3360-737c-4f12-a974-16bfaee1dd9a.png)
+
 
 - 입실, 퇴실
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/16e08e34-6bae-43fc-9b34-72a72ca20d0f/Untitled.png)
+![입실, 퇴실 1](https://user-images.githubusercontent.com/76434390/130803338-944f559e-d786-4e6a-a850-ffa6232f9820.png)
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/507f00fe-a8b0-464e-afa9-fc8ce5a14c6f/Untitled.png)
+![입실퇴실 2](https://user-images.githubusercontent.com/76434390/130803343-a4610dcb-a1c7-4ee0-864f-d7fe1443fb0d.png)
+
 
 - 좌석 선택 및 좌석 이동
+- 
+![좌석선택및이동](https://user-images.githubusercontent.com/76434390/130803396-437f6c17-9664-439e-b067-ce486b7434ab.png)
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7d5cead2-a681-4bfc-9edc-91a70a33a871/Untitled.png)
 
 - 시간권 기간권 구입
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a6244ff2-d9b6-45be-bf0e-840c048003fb/Untitled.png)
+![시간권,기간권구입1](https://user-images.githubusercontent.com/76434390/130803416-bc2ee3e3-ea8f-4509-8e80-b3c4d7e0099b.png)
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d771615a-4c2e-4352-b33c-522c77321e2b/Untitled.png)
+![시간권,기간권구입2](https://user-images.githubusercontent.com/76434390/130803421-1e6a6f8e-9fe8-49e1-beb4-3c597cd92d2d.png)
+
 
 - 결제 및 포인트 사용
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/de34faa8-002f-499f-8d54-740f39c244ed/Untitled.png)
+![결제](https://user-images.githubusercontent.com/76434390/130803450-ac069b55-0a9d-4e48-9766-ee94009f13ae.png)
+
